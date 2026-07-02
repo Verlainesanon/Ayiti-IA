@@ -4,9 +4,9 @@ Module d'évaluation pour Ayiti-AI.
 Calcule les métriques BLEU, ROUGE et perplexité pour évaluer
 la qualité du modèle, notamment en créole haïtien.
 """
+
 import logging
 import math
-from typing import Dict, List, Optional
 
 import torch
 
@@ -17,7 +17,8 @@ logger = logging.getLogger(__name__)
 # BLEU
 # ---------------------------------------------------------------------------
 
-def compute_bleu(predictions: List[str], references: List[str]) -> Dict[str, float]:
+
+def compute_bleu(predictions: list[str], references: list[str]) -> dict[str, float]:
     """
     Calcule le score BLEU (sacrebleu) entre prédictions et références.
 
@@ -46,7 +47,8 @@ def compute_bleu(predictions: List[str], references: List[str]) -> Dict[str, flo
 # ROUGE
 # ---------------------------------------------------------------------------
 
-def compute_rouge(predictions: List[str], references: List[str]) -> Dict[str, float]:
+
+def compute_rouge(predictions: list[str], references: list[str]) -> dict[str, float]:
     """
     Calcule les scores ROUGE-1, ROUGE-2 et ROUGE-L.
 
@@ -62,11 +64,9 @@ def compute_rouge(predictions: List[str], references: List[str]) -> Dict[str, fl
     except ImportError:
         raise ImportError("Installez rouge-score: pip install rouge-score")
 
-    scorer = rouge_scorer.RougeScorer(
-        ["rouge1", "rouge2", "rougeL"], use_stemmer=False
-    )
+    scorer = rouge_scorer.RougeScorer(["rouge1", "rouge2", "rougeL"], use_stemmer=False)
 
-    scores: Dict[str, float] = {"rouge1": 0.0, "rouge2": 0.0, "rougeL": 0.0}
+    scores: dict[str, float] = {"rouge1": 0.0, "rouge2": 0.0, "rougeL": 0.0}
     n = len(predictions)
     if n == 0:
         return scores
@@ -84,12 +84,13 @@ def compute_rouge(predictions: List[str], references: List[str]) -> Dict[str, fl
 # Perplexité
 # ---------------------------------------------------------------------------
 
+
 def compute_perplexity(
     model,
     tokenizer,
-    texts: List[str],
+    texts: list[str],
     max_length: int = 512,
-    device: Optional[str] = None,
+    device: str | None = None,
 ) -> float:
     """
     Calcule la perplexité du modèle sur une liste de textes.
@@ -143,6 +144,7 @@ def compute_perplexity(
 # Évaluation complète
 # ---------------------------------------------------------------------------
 
+
 def evaluate_model(
     model,
     tokenizer,
@@ -150,9 +152,9 @@ def evaluate_model(
     instruction_key: str = "instruction",
     output_key: str = "output",
     max_new_tokens: int = 256,
-    device: Optional[str] = None,
+    device: str | None = None,
     lang: str = "ht",
-) -> Dict[str, float]:
+) -> dict[str, float]:
     """
     Évalue le modèle sur un dataset en calculant BLEU, ROUGE et perplexité.
 
@@ -206,7 +208,7 @@ def evaluate_model(
         logger.warning("Aucun exemple évalué.")
         return {}
 
-    metrics: Dict[str, float] = {}
+    metrics: dict[str, float] = {}
     metrics.update(compute_bleu(predictions, references))
     metrics.update(compute_rouge(predictions, references))
     metrics["perplexity"] = compute_perplexity(model, tokenizer, texts_for_ppl, device=device)

@@ -74,6 +74,8 @@ addopts    = "-v --tb=short"
 [tool.ruff]
 line-length = 100
 target-version = "py310"
+
+[tool.ruff.lint]
 select = [
     "E",   # pycodestyle errors
     "W",   # pycodestyle warnings
@@ -86,15 +88,29 @@ select = [
 ignore = [
     "E501",  # line-length géré par ruff format
     "B008",  # do not perform function calls in default arguments
+    "B904",  # raise from err (raises intentionnels dans except ImportError)
+    "B905",  # zip() strict= (compatibilité Python 3.10)
+    "F401",  # imported but unused (anciens fichiers src/ hors package)
 ]
 
-[tool.ruff.per-file-ignores]
+[tool.ruff.lint.per-file-ignores]
 "tests/*" = ["S101"]  # Allow assert in tests
+"src/data/*" = ["F401"]
+"src/training/*" = ["F401"]
+"src/evaluation/*" = ["F401"]
+"src/inference/*" = ["F401"]
 
 # ── Mypy ────────────────────────────────────────────────────────────────────
 [tool.mypy]
-python_version        = "3.10"
+python_version        = "3.12"
 warn_unused_configs   = true
 ignore_missing_imports = true
 no_implicit_optional  = true
 warn_return_any       = true
+
+# ── Bandit ──────────────────────────────────────────────────────────────────
+[tool.bandit]
+exclude_dirs = ["tests", "venv", ".git"]
+skips = [
+    "B615"  # Ignore huggingface_unsafe_download (revision pinning optionnelle pour les LLMs)
+]

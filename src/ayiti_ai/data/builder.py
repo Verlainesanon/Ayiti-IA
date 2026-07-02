@@ -4,11 +4,11 @@ Constructeur de dataset Ayiti-AI.
 Charge les fichiers JSONL bruts, nettoie le texte créole/français/anglais,
 construit un dataset HuggingFace et exporte en Parquet.
 """
+
 import json
 import logging
 import re
 from pathlib import Path
-from typing import Dict, List
 
 import pandas as pd
 from datasets import Dataset
@@ -30,7 +30,7 @@ class AyitiDatasetBuilder:
         self.processed_path = Path(processed_path)
         self.processed_path.mkdir(parents=True, exist_ok=True)
 
-    def load_raw_files(self, pattern: str = "*.jsonl") -> List[Dict]:
+    def load_raw_files(self, pattern: str = "*.jsonl") -> list[dict]:
         """Charge tous les fichiers JSONL depuis raw_path."""
         data = []
         for file_path in self.raw_path.glob(pattern):

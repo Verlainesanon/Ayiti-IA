@@ -4,14 +4,13 @@ Tests unitaires pour AyitiDatasetBuilder.
 Ces tests ne nécessitent pas de fichiers de données réels —
 ils créent des données temporaires et vérifient le comportement.
 """
+
 import json
-import pytest
-import tempfile
-import os
 from pathlib import Path
 
-from src.data.dataset_builder import AyitiDatasetBuilder
+import pytest
 
+from ayiti_ai.data.builder import AyitiDatasetBuilder
 
 # ---------------------------------------------------------------------------
 # Fixtures
@@ -68,6 +67,7 @@ def builder(tmp_dirs, sample_jsonl):
 # Tests
 # ---------------------------------------------------------------------------
 
+
 class TestCleanText:
     def test_removes_control_characters(self):
         builder = AyitiDatasetBuilder.__new__(AyitiDatasetBuilder)
@@ -123,6 +123,7 @@ class TestLoadRawFiles:
 class TestBuildTrainDataset:
     def test_returns_dataset(self, builder):
         from datasets import Dataset
+
         dataset = builder.build_train_dataset()
         assert isinstance(dataset, Dataset)
 
@@ -153,7 +154,7 @@ class TestBuildTokenizerCorpus:
 
     def test_corpus_contains_haitian_text(self, builder):
         corpus_path = builder.build_tokenizer_corpus()
-        with open(corpus_path, "r", encoding="utf-8") as f:
+        with open(corpus_path, encoding="utf-8") as f:
             content = f.read()
         assert "Kijan" in content or "rele" in content
 

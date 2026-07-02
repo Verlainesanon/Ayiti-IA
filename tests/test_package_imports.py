@@ -2,6 +2,7 @@
 Test d'importation du nouveau package ayiti_ai.
 Ce test vérifie que tous les sous-modules du package sont importables.
 """
+
 import pytest
 
 
@@ -80,6 +81,7 @@ def test_imports_ayiti_ai_utils():
 def test_package_version():
     """Vérifie que la version du package est définie."""
     import ayiti_ai
+
     assert hasattr(ayiti_ai, "__version__"), "Le package doit avoir un attribut __version__"
     assert isinstance(ayiti_ai.__version__, str), "__version__ doit être une chaîne"
     assert ayiti_ai.__version__ == "0.1.0"

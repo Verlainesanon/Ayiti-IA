@@ -4,8 +4,10 @@ Module d'inférence pour Ayiti-AI.
 Permet de dialoguer avec le modèle Qwen fine-tuné en créole haïtien,
 français ou anglais via une interface de chat simple.
 """
+
 import logging
-from typing import Dict, Iterator, List, Optional
+from collections.abc import Iterator
+from typing import Any
 
 import torch
 from peft import PeftModel
@@ -26,7 +28,7 @@ class AyitiChat:
         print(response)
     """
 
-    SYSTEM_PROMPTS: Dict[str, str] = {
+    SYSTEM_PROMPTS: dict[str, str] = {
         "ht": (
             "Ou se Ayiti-AI, yon asistan entèlijan ki pale kreyòl ayisyen, "
             "fransè ak anglè. Ou konprann kilti ak kontèks ayisyen. "
@@ -47,8 +49,8 @@ class AyitiChat:
     def __init__(
         self,
         base_model: str = "Qwen/Qwen2.5-1.5B-Instruct",
-        adapter_path: Optional[str] = None,
-        device: Optional[str] = None,
+        adapter_path: str | None = None,
+        device: str | None = None,
     ):
         """
         Initialise le modèle et le tokenizer.
@@ -62,13 +64,11 @@ class AyitiChat:
         logger.info(f"Device: {self.device}")
 
         logger.info(f"Chargement du tokenizer: {base_model}")
-        self.tokenizer = AutoTokenizer.from_pretrained(
-            base_model, trust_remote_code=True
-        )
+        self.tokenizer = AutoTokenizer.from_pretrained(base_model, trust_remote_code=True)
         self.tokenizer.pad_token = self.tokenizer.eos_token
 
         logger.info(f"Chargement du modèle: {base_model}")
-        self.model = AutoModelForCausalLM.from_pretrained(
+        self.model: Any = AutoModelForCausalLM.from_pretrained(
             base_model,
             torch_dtype=torch.float16 if self.device != "cpu" else torch.float32,
             device_map=self.device,
@@ -93,11 +93,11 @@ class AyitiChat:
         self,
         user_input: str,
         lang: str = "ht",
-        history: Optional[List[Dict]] = None,
-    ) -> List[Dict]:
+        history: list[dict] | None = None,
+    ) -> list[dict]:
         """Construit la liste de messages au format ChatML."""
         lang = lang if lang in self.SYSTEM_PROMPTS else "ht"
-        messages: List[Dict] = [{"role": "system", "content": self.SYSTEM_PROMPTS[lang]}]
+        messages: list[dict] = [{"role": "system", "content": self.SYSTEM_PROMPTS[lang]}]
         if history:
             messages.extend(history)
         messages.append({"role": "user", "content": user_input})
@@ -107,7 +107,7 @@ class AyitiChat:
         self,
         user_input: str,
         lang: str = "ht",
-        history: Optional[List[Dict]] = None,
+        history: list[dict] | None = None,
         max_new_tokens: int = 512,
         temperature: float = 0.7,
         top_p: float = 0.9,
@@ -148,8 +148,10 @@ class AyitiChat:
             )
 
         # Décoder seulement les nouveaux tokens
-        new_tokens = outputs[0][inputs["input_ids"].shape[-1]:]
+        new_tokens = outputs[0][inputs["input_ids"].shape[-1] :]
         response = self.tokenizer.decode(new_tokens, skip_special_tokens=True)
+        if isinstance(response, list):
+            response = " ".join(response)
         return response.strip()
 
     def generate_stream(
@@ -168,7 +170,7 @@ class AyitiChat:
         print(f"\n🇭🇹 Ayiti-AI — {lang_names.get(lang, lang)}")
         print("Tape 'quit' pou sòti / Tapez 'quit' pour quitter\n")
 
-        history: List[Dict] = []
+        history: list[dict] = []
         while True:
             try:
                 user_input = input("Ou: ").strip()
@@ -185,10 +187,12 @@ class AyitiChat:
             response = self.generate(user_input, lang=lang, history=history)
             print(f"Ayiti-AI: {response}\n")
 
-            history.extend([
-                {"role": "user", "content": user_input},
-                {"role": "assistant", "content": response},
-            ])
+            history.extend(
+                [
+                    {"role": "user", "content": user_input},
+                    {"role": "assistant", "content": response},
+                ]
+            )
 
 
 def main() -> None:

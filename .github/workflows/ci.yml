@@ -121,4 +121,4 @@ jobs:
         run: pip install bandit[toml]
 
       - name: Run Bandit
-        run: bandit -r src/ayiti_ai/ -ll -x tests/
+        run: bandit -r src/ayiti_ai/ -ll -x tests/ -s B615
