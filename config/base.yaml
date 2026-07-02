@@ -1,0 +1,28 @@
+project:
+  name: "Ayiti-AI"
+  version: "0.1.0"
+  description: "IA souveraine haïtienne"
+
+model:
+  base: "Qwen/Qwen2.5-7B-Instruct"
+  quantization: "4bit"
+  dtype: "bfloat16"
+
+data:
+  raw_path: "data/raw/"
+  processed_path: "data/processed/"
+  external_path: "data/external/"
+  languages: ["ht", "fr", "en"]
+
+training:
+  lora:
+    r: 16
+    alpha: 32
+    dropout: 0.05
+    target_modules: ["q_proj", "k_proj", "v_proj", "o_proj"]
+  sft:
+    batch_size: 2
+    gradient_accumulation: 4
+    learning_rate: 2.0e-4
+    epochs: 3
+    max_seq_length: 512

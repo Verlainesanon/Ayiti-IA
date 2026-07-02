@@ -1,0 +1,10 @@
+num_train_epochs: 3
+per_device_train_batch_size: 2
+gradient_accumulation_steps: 4
+learning_rate: 2.0e-4
+warmup_steps: 100
+logging_steps: 10
+save_steps: 50
+max_seq_length: 512
+bf16: true
+report_to: "none"

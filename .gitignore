@@ -1,0 +1,37 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.env
+venv/
+env/
+
+# Données (NE JAMAIS METTRE SUR GITHUB)
+data/raw/*
+data/processed/*
+!data/raw/.gitkeep
+!data/processed/.gitkeep
+*.parquet
+*.jsonl
+*.csv
+*.safetensors
+*.bin
+*.pth
+*.ckpt
+!data/raw/seed_ht.jsonl
+
+
+# Logs et métriques
+logs/
+wandb/
+mlruns/
+*.log
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db

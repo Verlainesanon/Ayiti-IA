@@ -1,0 +1,25 @@
+# Core ML stack
+torch>=2.1.0
+transformers>=4.36.0
+peft>=0.7.0
+trl>=0.7.0
+bitsandbytes>=0.41.0
+
+# Data
+datasets>=2.14.0
+pandas>=2.0.0
+pyarrow>=14.0.0
+tokenizers>=0.15.0
+openpyxl>=3.1.0
+
+# Evaluation
+sacrebleu>=2.3.0
+rouge-score>=0.1.2
+
+# Utilities
+pyyaml>=6.0
+tqdm>=4.65.0
+
+# Dev / Tests
+pytest>=7.4.0
+pyflakes>=3.1.0
