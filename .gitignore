@@ -6,8 +6,15 @@ __pycache__/
 .env
 venv/
 env/
+*.egg-info/
+dist/
+build/
 
-# Données (NE JAMAIS METTRE SUR GITHUB)
+# Packaging / pip
+pip-wheel-metadata/
+*.whl
+
+# Données (NE JAMAIS METTRE SUR GITHUB — trackées par DVC)
 data/raw/*
 data/processed/*
 !data/raw/.gitkeep
@@ -21,16 +28,41 @@ data/processed/*
 *.ckpt
 !data/raw/seed_ht.jsonl
 
+# Modèles fine-tunés (trop lourds pour Git — DVC ou HF Hub)
+models/
+outputs/
+checkpoints/
+adapters/
 
 # Logs et métriques
 logs/
 wandb/
 mlruns/
+runs/
 *.log
+
+# DVC
+.dvc/cache/
+.dvc/tmp/
+
+# Tests & Coverage
+.pytest_cache/
+.coverage
+coverage.xml
+htmlcov/
+*.cover
+
+# Cache pip / uv
+.cache/
+cache/hub/
+
+# pre-commit
+.pre-commit-cache/
 
 # IDE
 .vscode/
 .idea/
+*.swp
 
 # OS
 .DS_Store
