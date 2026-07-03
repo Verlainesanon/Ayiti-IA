@@ -1,0 +1,200 @@
+version: "1.0.0"
+last_updated: "2026-07-03"
+validated_by:
+  - "Jean-Luc Destin (Locuteur natif, Port-au-Prince)"
+  - "Marie-Claude Sanon (Locutrice native, Cap-Haïtien)"
+
+markers:
+  ht:
+    # Particules Temps-Mode-Aspect (TMA) - Exclusives et de confiance maximale
+    tma_particles:
+      - word: "ap"
+        confidence: 1.0
+        frequency_corpus: 0.087
+        variants: ["ap'", " ap "]
+      - word: "pral"
+        confidence: 1.0
+        frequency_corpus: 0.032
+        variants: ["prale", "pral'"]
+      - word: "tap"
+        confidence: 1.0
+        frequency_corpus: 0.015
+        variants: ["t'ap"]
+      - word: "fèk"
+        confidence: 1.0
+        frequency_corpus: 0.008
+        variants: ["fek", "fək"]
+      - word: "poko"
+        confidence: 1.0
+        frequency_corpus: 0.006
+        variants: ["pako"]
+      - word: "sot"
+        confidence: 0.90
+        frequency_corpus: 0.009
+        variants: ["sòt"]
+
+    # Pronoms personnels exclusifs ou agglutinés
+    pronouns:
+      - word: "mwen"
+        confidence: 1.0
+        frequency_corpus: 0.052
+      - word: "yo"
+        confidence: 0.85
+        frequency_corpus: 0.045
+        note: "Peut parfois entrer en collision avec des argots ou onomatopées anglais"
+
+    # Marqueurs lexicaux exclusifs (fusions ou contractions morphologiques)
+    lexical:
+      - word: "kijan"
+        confidence: 1.0
+      - word: "kisa"
+        confidence: 1.0
+      - word: "kilès"
+        confidence: 1.0
+      - word: "poukisa"
+        confidence: 1.0
+      - word: "konsa"
+        confidence: 1.0
+      - word: "tankou"
+        confidence: 1.0
+      - word: "toujou"
+        confidence: 1.0
+      - word: "janm"
+        confidence: 1.0
+      - word: "anpil"
+        confidence: 1.0
+      - word: "sèlman"
+        confidence: 1.0
+        variants: ["selman"]
+      - word: "mèsi"
+        confidence: 0.95
+      - word: "bondye"
+        confidence: 1.0
+        variants: ["bondje"]
+      - word: "granmesi"
+        confidence: 1.0
+      - word: "nèg"
+        confidence: 1.0
+        variants: ["neg"]
+
+    # N-grammes (bigrammes/trigrammes syntactiques exclusifs)
+    ngrams:
+      - pattern: "m ap"
+        confidence: 1.0
+      - pattern: "l ap"
+        confidence: 1.0
+      - pattern: "n ap"
+        confidence: 1.0
+      - pattern: "w ap"
+        confidence: 1.0
+      - pattern: "y ap"
+        confidence: 1.0
+      - pattern: "pa gen"
+        confidence: 1.0
+      - pattern: "sa k pase"
+        confidence: 1.0
+      - pattern: "sa w di"
+        confidence: 1.0
+      - pattern: "an nou"
+        confidence: 1.0
+      - pattern: "se pa"
+        confidence: 0.95
+
+    # Diacritiques et séquences typographiques exclusives
+    diacritics:
+      - char: "ò"
+        confidence: 0.95
+        note: "Le o grave est inexistant en français et anglais standard"
+      - char: "èk"
+        confidence: 0.98
+        note: "Terminaison typique kreyòl"
+
+  fr:
+    # Verbes français conjugués exclusifs
+    verbs_conjugated:
+      - word: "sont"
+        confidence: 0.98
+      - word: "suis"
+        confidence: 0.98
+      - word: "avez"
+        confidence: 0.98
+      - word: "avons"
+        confidence: 0.98
+      - word: "sommes"
+        confidence: 0.98
+      - word: "êtes"
+        confidence: 0.98
+
+    # Contractions et élisions typiques du français
+    contractions:
+      - pattern: "c'est"
+        confidence: 1.0
+      - pattern: "qu'"
+        confidence: 1.0
+      - pattern: "n'est"
+        confidence: 1.0
+      - pattern: "j'ai"
+        confidence: 1.0
+      - pattern: "est-ce"
+        confidence: 1.0
+
+    # Adverbes et conjonctions exclusifs
+    lexical:
+      - word: "très"
+        confidence: 0.99
+      - word: "beaucoup"
+        confidence: 1.0
+      - word: "parce"
+        confidence: 0.99
+      - word: "pourquoi"
+        confidence: 1.0
+      - word: "aujourd'hui"
+        confidence: 1.0
+
+    # Diacritiques exclusifs français
+    diacritics:
+      - char: "ù"
+        confidence: 1.0
+        note: "Uniquement présent dans 'où' en français"
+      - char: "œ"
+        confidence: 1.0
+      - char: "ë"
+        confidence: 1.0
+
+  en:
+    # Mots outils anglais de haute fréquence et exclusivité
+    lexical:
+      - word: "the"
+        confidence: 1.0
+      - word: "with"
+        confidence: 1.0
+      - word: "hello"
+        confidence: 0.95
+      - word: "what"
+        confidence: 0.99
+      - word: "which"
+        confidence: 1.0
+      - word: "where"
+        confidence: 0.98
+
+    # Verbes et modaux anglais
+    verbs:
+      - word: "is"
+        confidence: 0.90
+      - word: "are"
+        confidence: 0.90
+      - word: "have"
+        confidence: 0.90
+      - word: "will"
+        confidence: 0.95
+      - word: "would"
+        confidence: 0.98
+
+    # Patterns syntaxiques typiques de l'anglais
+    patterns:
+      - pattern: "'s"
+        confidence: 0.90
+        note: "Possessif ou contraction"
+      - pattern: "th"
+        confidence: 0.60
+        note: "Forte fréquence trigramme de lettres"
